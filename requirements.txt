@@ -1,0 +1,54 @@
+# Core ML and PyTorch dependencies
+torch>=2.0.0
+torchvision
+torchaudio
+
+# Transformers and model handling
+transformers>=4.37.0
+tokenizers
+accelerate
+datasets
+
+# Training and fine-tuning frameworks
+trl>=0.7.0
+peft>=0.5.0
+datasets>=2.0.0
+
+# Optimization and utilities
+optimum
+bitsandbytes
+
+# Experiment tracking
+wandb
+
+# Data processing
+numpy
+pandas
+scikit-learn
+
+# Development and utility libraries
+tqdm
+requests
+packaging
+safetensors
+
+# Optional: vLLM (if building from source)
+# Note: vLLM might need to be installed separately from source on Mac
+# git+https://github.com/vllm-project/vllm.git
+
+# JSON handling (usually built-in but explicit for clarity)
+# Standard library: json, re, os are built-in
+
+# Additional dependencies that might be needed
+huggingface_hub
+python-dotenv
+
+# GRPO Training Framework
+# Install from GitHub dev branch: pip install git+https://github.com/willccbb/verifiers.git@dev
+verifiers>=0.1.0
+
+# Optional: vLLM for advanced inference (experimental Mac support)
+vllm>=0.9.0
+
+# Optional: Reasoning environments for testing
+reasoning-gym>=0.1.0 

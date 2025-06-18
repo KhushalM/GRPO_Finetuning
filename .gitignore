@@ -1,0 +1,49 @@
+# Environment variables and secrets
+.env
+.env.local
+.env.*.local
+
+# API Keys and tokens
+*.key
+api_keys.txt
+
+# Virtual environments
+grpo-env/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Model files and checkpoints
+models/
+checkpoints/
+*.safetensors
+*.bin
+
+# Dataset files (if large)
+*.jsonl
+first_principles_dataset.json
+
+# Training outputs
+outputs/
+runs/
+wandb/ 

@@ -12,7 +12,3 @@ class Model:
             device_map = "auto",
             trust_remote_code = True
         )
-
-if __name__ == "__main__":
-    model = Model(model_name = "Qwen/Qwen2.5-7B-Instruct", device = "mps")
-    print(model.model)

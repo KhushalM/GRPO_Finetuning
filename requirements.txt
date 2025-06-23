@@ -52,3 +52,6 @@ vllm>=0.9.0
 
 # Optional: Reasoning environments for testing
 reasoning-gym>=0.1.0 
+
+nltk
+textstat

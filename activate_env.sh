@@ -3,6 +3,7 @@
 
 echo "Activating GRPO fine-tuning environment..."
 source grpo-env/bin/activate
+pip install -r requirements.txt
 
 # Set environment variables for Mac optimization
 export MPS_DEVICE=1

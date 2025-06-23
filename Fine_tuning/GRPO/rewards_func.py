@@ -270,9 +270,9 @@ class FirstPrinciplesRewardFunction:
         
         # Check response length (should be substantial but not excessive)
         word_count = len(response.split())
-        if 50 <= word_count <= 300:
+        if 100 <= word_count <= 300:
             score += 0.5
-        elif 30 <= word_count <= 400:
+        elif 60 <= word_count <= 400:
             score += 0.3
         else:
             score += 0.1

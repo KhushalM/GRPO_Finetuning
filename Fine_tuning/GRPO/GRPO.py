@@ -154,7 +154,7 @@ def compute_reward(responses, contexts=None):
     return rewards
 
 # GRPO Config
-GRPO_CONFIG = GRPOConfig(
+GRPO_CONFIG = GRPOConfig (
     output_dir = output_dir,
     num_train_epochs = 3,
     per_device_train_batch_size = 2,
@@ -182,7 +182,7 @@ GRPO_CONFIG = GRPOConfig(
     max_new_tokens = 1024,
     num_generations = 4,
     temperature = 0.7,
-    kl_penalty = "kl"
+    kl_penalty = "kl",
     kl_coef = 0.05,
     reward_model_path = None,
     bf16 = True if device == "cuda" else False,

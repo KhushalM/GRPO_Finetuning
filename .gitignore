@@ -47,3 +47,12 @@ first_principles_dataset.json
 outputs/
 runs/
 wandb/ 
+
+#ssh
+*.pem
+*.pub
+*.key
+*.key.pub
+*.key.pem
+*.key.pub.pem
+*.key.pem.pub

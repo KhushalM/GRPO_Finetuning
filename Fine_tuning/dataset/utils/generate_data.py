@@ -19,54 +19,36 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Generate dataset for first principles")
     parser.add_argument("--model", type=str, default="gpt-4.1-mini", help="Model to use for generation")
     parser.add_argument("--num_prompts", type=int, default=600, help="Number of conversation objects to generate")
-    parser.add_argument("--batch_size", type=int, default=100, help="Batch size for generation")
+    parser.add_argument("--batch_size", type=int, default=200, help="Batch size for generation")
     parser.add_argument("--output_file", type=str, default="structured_dataset.json", help="File to save the dataset")
     parser.add_argument("--temperature", type=float, default=0.7, help="Temperature for generation")
     return parser.parse_args()
 
 SYSTEM_INSTRUCTION = (
-    "You are an expert educator who breaks down complex ideas from first principles. \n"
-    "**Reply ONLY with a valid JSON object** using **this exact structure**: \n"
-    "{\n"
-    "  \"messages\": [\n"
-    "    {\"role\": \"system\", \"content\": \"You are an expert educator who explains concepts from first principles like Richard Feynman. "
-    "Start with fundamental truths, use simple analogies, and avoid jargon. Use a storytelling tone and follow a step by step explanation style: "
-    "    {\"role\": \"user\", \"content\": \"<concept observation/question>\"},\n"
-    "    {\"role\": \"assistant\", \"content\": \"<Feynman-style explanation using the 3-part structure>\"}\n"
-    "  ]\n"
-    "}\n\n"
-    "**Critical Rules**: \n"
-    "1. **Never** use `prompt`/`answer` keys. \n"
-    "2. **Never** include non-JSON text (e.g., ``````). \n"
-    "3. **Each object must contain exactly one user-assistant exchange.** \n"
-    "   - **Do not include multiple user-assistant pairs in a single object.** \n"
-    "4. **Assistant content must follow this explanation structure (Do not include Step 1, Step 2, Step 3, Step 4 in the assistant message)**:\n"
-    "   Step 1: Begin with an easy metaphor (e.g., 'Okay, let’s imagine...') something that draws a visual image in the user's mind, "
-    "   Step 2: Explain with a methaphorical example easily understood even by a middle school student explaining from fundamentals and first principles"
-    "   Step 3: Move to a real-world example grounded in daily life or observable phenomena, and build it from grounds up fundamentals fully from first principles"
-    "   Step 4: End by asking the user if they now feel they’ve understood or connected the dots.\"},\n"
-    "5. **Prohibited**: \n"
-    "   - No phrases like 'explain from first principles' in user messages. \n"
-    "   - No standalone keys like 'prompt' or 'answer'. \n"
-    "   - No multi-turn conversations in a single object. \n"
-    "6. **Each sample must be a standalone conversation.** \n"
-    "7. **The user message should be a question or observation about the concept.** \n"
-    "8. **The user message question complexity range should vary from basic concepts to advanced concepts.** \n"
-    "9. **The assistant message should be limited to 600 words. Easier topics could be shorter, harder topics could be longer.** \n"
-    "10. **Do not forget the system message.** \n\n"
-    "11. **Item must have exactly 3 messages (system, user, assistant)** \n"
-    "**JSON Formatting Rules:** \n"
-    "- All content must be on single lines (no actual line breaks) \n"
-    "- Use \\n for line breaks, \\t for tabs \n"
-    "- Escape all quotes with backslash-quote \n"
-    "- No control characters (newlines, tabs, etc.) in strings"
+    "Reply ONLY with a valid JSON object in this format: "
+    "{ 'messages': ["
+    "  {'role': 'system', 'content': 'You are an expert educator who explains from first principles like Richard Feynman.'},"
+    "  {'role': 'user', 'content': '<question or observation>'},"
+    "  {'role': 'assistant', 'content': '<explanation>'}"
+    "] }\n"
+    "Rules: "
+    "- 3 messages: system, user, assistant."
+    "- Assistant: Open with a varied metaphor, surprising fact, question, or scenario in every completion (never always 'Okay, let’s imagine', 'Imagine', etc.). <STRICTLY ENFORCE THIS>"
+    "- Assistant: 30% metaphor, 60% real-world example, 10% varied closing question asking if they now feel they’ve understood or connected the dots."
+    "- Responses should be around 80-120 words. 10% here and there can be longer or shorter. <STRICTLY ENFORCE THIS>"
+    "- No duplicate concepts."
+    "- No prompt/answer keys."
+    "- No non-JSON text."
+    "- All content on single lines (use \\n for line breaks)."
+    "- User message is a question or observation."
+    "- System message must be present."
 )
 
 
 
 USER_TEMPLATE = (
     "Generate {n} **unique** conversation objects that meet the above format."
-    "Cover a broad range of disciplines"
+    "Cover a broad range of disciplines."
     "**Diversity Requirements**: "
     "1. **Discipline Coverage**: "
     "   - 15% STEM (Physics/Chemistry/Biology) "
@@ -89,6 +71,7 @@ USER_TEMPLATE = (
     "4. **Uniqueness Safeguards**: "
     "   - No duplicate concepts"
     "   - Vary explanation angles"
+    "   - **Vary the opening lines of the assistant completions. Do NOT use the same opening phrase (e.g., 'Okay, let’s imagine', 'Imagine', 'Let’s imagine', 'Suppose', etc.) in more than 10% of completions. Use a mix of metaphors, surprising facts, direct questions, analogies, or direct explanations as opening lines.**"
     "5. **Output Format**: "
     "   - Return *only* a JSON array of objects with the 'messages' structure."
 )

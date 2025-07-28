@@ -51,10 +51,10 @@ def merge_models(adapter_name):
     merged_model.save_pretrained(output_dir)
     tokenizer.save_pretrained(output_dir)
     logger.info(f"Saved merged model to {output_dir}")
-    # merged_model.push_to_hub(
-    #     repo_id="KhushalM/Qwen2.5-1.5-SFT-Merged",
-    #     use_auth_token=True,
-    # )
+    merged_model.push_to_hub(
+        repo_id="KhushalM/Qwen2.5-1.5-SFT-Merged",
+        use_auth_token=True,
+    )
     tokenizer.push_to_hub(
         repo_id="KhushalM/Qwen2.5-1.5-SFT-Merged",
         use_auth_token=True,
